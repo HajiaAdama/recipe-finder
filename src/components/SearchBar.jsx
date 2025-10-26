@@ -1,20 +1,31 @@
-// src/components/SearchBar.jsx
 import React, { useState } from "react";
 
 export default function SearchBar({ onSearch }) {
-  const [q, setQ] = useState("");
+  const [query, setQuery] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (query.trim()) onSearch(query);
+  };
+
   return (
-    <form onSubmit={(e) => { e.preventDefault(); onSearch(q); }}>
-      <div className="flex gap-2">
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Search recipes (e.g. Arrabiata)"
-          className="flex-1 p-2 rounded-lg bg-white/5 text-white placeholder-sky-200 outline-none"
-          aria-label="Search recipes"
-        />
-        <button className="px-4 py-2 bg-sky-500 rounded-lg text-white">Search</button>
-      </div>
+    <form
+      onSubmit={handleSubmit}
+      className="flex items-center bg-white/80 backdrop-blur-md rounded-full shadow-md w-full max-w-md px-4 py-2"
+    >
+      <input
+        type="text"
+        placeholder="Search recipes..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="flex-grow bg-transparent border-none focus:outline-none px-3 text-gray-700"
+      />
+      <button
+        type="submit"
+        className="bg-orange-500 text-white px-5 py-2 rounded-full hover:bg-orange-600 transition"
+      >
+        Search
+      </button>
     </form>
   );
 }
